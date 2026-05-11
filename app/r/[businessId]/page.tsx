@@ -1,164 +1,141 @@
 "use client"
 
 import { useState } from "react"
+import { Star } from "lucide-react"
 
 export default function ReviewPage() {
-  const [rating, setRating] = useState<number | null>(null)
-  const [hovered, setHovered] = useState<number | null>(null)
-  const [showForm, setShowForm] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-
+  const [rating, setRating] = useState(0)
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
-
-  const googleReviewUrl = "https://g.page/r/CeJcPxHZnxvUEBM/review"
+  const [submitted, setSubmitted] = useState(false)
 
   const handleRating = (value: number) => {
     setRating(value)
+
+    // Redirect for positive reviews
     if (value >= 4) {
-      window.location.href = googleReviewUrl
-    } else {
-      setShowForm(true)
+      window.location.href =
+        "https://g.page/r/CeJcPxHZnxvUEBM/review"
     }
   }
 
   const handleSubmit = async () => {
-    if (!name.trim() || !message.trim()) return
-    setSubmitting(true)
     try {
-      const response = await fetch("/api/feedback", {
+      await fetch("/api/feedback", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ businessId: "test123", rating, name, phone, message }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rating,
+          name,
+          phone,
+          message,
+        }),
       })
-      const data = await response.json()
-      console.log(data)
+
       setSubmitted(true)
     } catch (error) {
-      console.error(error)
-      alert("Something went wrong. Please try again.")
-    } finally {
-      setSubmitting(false)
+      console.log(error)
     }
   }
 
-  if (submitted) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-black p-6 text-white">
-        <div className="w-full max-w-md text-center">
-          <div className="mb-4 text-6xl">🙏</div>
-          <h2 className="text-3xl font-bold">Thank You!</h2>
-          <p className="mt-3 text-gray-400">Your feedback has been received.</p>
-        </div>
-      </div>
-    )
-  }
-
-  const activeIndex = hovered ?? rating ?? 0
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black p-6 text-white">
-      <div className="w-full max-w-md text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Review Funnel</h1>
-        <p className="mt-3 text-lg text-gray-400">How was your experience?</p>
+    <div className="min-h-screen bg-white flex justify-center">
+      <div className="w-full max-w-md min-h-screen bg-white">
 
-        <div className="mt-8 flex justify-center">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              aria-label={`Rate ${star} stars`}
-              onPointerDown={() => handleRating(star)}
-              onMouseEnter={() => setHovered(star)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                touchAction: "manipulation",
-                WebkitTapHighlightColor: "transparent",
-                minWidth: "56px",
-                minHeight: "56px",
-                background: "none",
-                border: "none",
-                padding: "4px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "48px",
-                  lineHeight: 1,
-                  pointerEvents: "none",
-                  color: star <= activeIndex ? "#facc15" : "#4b5563",
-                  transition: "color 0.15s ease",
-                  userSelect: "none",
-                }}
-              >
-                {star <= activeIndex ? "★" : "☆"}
-              </span>
-            </button>
-          ))}
+        {/* Header */}
+        <div className="border-b border-gray-200 px-5 py-6">
+          <h1 className="text-3xl font-semibold text-center text-gray-900">
+            Cosmetic Palace Nagpur
+          </h1>
+
+          <p className="text-center text-gray-500 mt-2 text-lg">
+            Share your experience
+          </p>
         </div>
 
-        {rating && !showForm && (
-          <p className="mt-5 text-sm text-gray-400">
-            You selected{" "}
-            <span className="font-semibold text-white">
-              {rating} star{rating > 1 ? "s" : ""}
-            </span>
-            {rating >= 4 ? " — redirecting…" : ""}
-          </p>
-        )}
+        {/* Rating Section */}
+        <div className="px-6 pt-12">
+          <h2 className="text-center text-2xl font-medium text-gray-800">
+            How was your experience?
+          </h2>
 
-        {showForm && (
-          <div className="mt-8 space-y-3 text-left">
-            <p className="mb-4 text-center text-sm text-gray-400">
-              We're sorry to hear that. Tell us what happened.
-            </p>
+          <div className="flex justify-center gap-3 mt-10">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                onClick={() => handleRating(star)}
+              >
+                <Star
+                  size={42}
+                  className={
+                    star <= rating
+                      ? "fill-yellow-400 text-yellow-400"
+                      : "text-gray-400"
+                  }
+                />
+              </button>
+            ))}
+          </div>
+        </div>
 
-            <input
-              type="text"
-              placeholder="Your Name *"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={{ fontSize: "16px" }}
-              className="w-full rounded-lg border border-white/10 bg-white/5 p-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
-            />
+        {/* Negative Feedback Form */}
+        {rating > 0 && rating <= 3 && (
+          <div className="px-6 mt-12 pb-10">
 
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              style={{ fontSize: "16px" }}
-              className="w-full rounded-lg border border-white/10 bg-white/5 p-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
-            />
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
 
-            <textarea
-              placeholder="Your Feedback *"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={4}
-              style={{ fontSize: "16px" }}
-              className="w-full resize-none rounded-lg border border-white/10 bg-white/5 p-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
-            />
+              <h3 className="text-2xl font-semibold text-gray-900">
+                Tell us what went wrong
+              </h3>
 
-            <button
-              type="button"
-              onPointerDown={handleSubmit}
-              disabled={submitting || !name.trim() || !message.trim()}
-              style={{
-                touchAction: "manipulation",
-                WebkitTapHighlightColor: "transparent",
-                fontSize: "16px",
-              }}
-              className="w-full rounded-lg bg-white p-3 font-semibold text-black transition-opacity active:opacity-70 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              {submitting ? "Submitting…" : "Submit Feedback"}
-            </button>
+              <p className="text-gray-500 mt-2">
+                Your feedback helps us improve.
+              </p>
+
+              <div className="mt-6 space-y-4">
+
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full border border-gray-300 rounded-xl p-4 outline-none text-lg"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full border border-gray-300 rounded-xl p-4 outline-none text-lg"
+                />
+
+                <textarea
+                  placeholder="Please share your experience..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={5}
+                  className="w-full border border-gray-300 rounded-xl p-4 outline-none text-lg"
+                />
+
+                <button
+                  onClick={handleSubmit}
+                  className="w-full bg-black text-white py-4 rounded-xl text-lg font-semibold"
+                >
+                  Submit Feedback
+                </button>
+
+                {submitted && (
+                  <p className="text-center text-green-600 font-medium">
+                    Feedback submitted successfully.
+                  </p>
+                )}
+
+              </div>
+            </div>
           </div>
         )}
       </div>
