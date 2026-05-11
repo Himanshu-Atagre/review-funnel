@@ -13,7 +13,7 @@ export default function ReviewPage() {
   const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
 
-  const googleReviewUrl = "https://www.google.com"
+  const googleReviewUrl = "https://g.page/r/CeJcPxHZnxvUEBM/review"
 
   const handleRating = (value: number) => {
     setRating(value)
