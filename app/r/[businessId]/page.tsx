@@ -25,7 +25,7 @@ export default function ReviewPage() {
 
   const handleSubmit = async () => {
     try {
-      await fetch("YOUR_WEB_APP_URL", {
+      await fetch("https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec", {
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify({
