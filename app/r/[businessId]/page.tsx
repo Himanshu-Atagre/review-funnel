@@ -25,7 +25,7 @@ export default function ReviewPage() {
 
   const handleSubmit = async () => {
     try {
-      await fetch("/api/feedback", {
+      await fetch("https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
