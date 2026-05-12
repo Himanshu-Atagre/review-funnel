@@ -25,24 +25,28 @@ export default function ReviewPage() {
 
   const handleSubmit = async () => {
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec", {
+      const YOUR_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec"
+
+      await fetch(YOUR_WEB_APP_URL, {
         method: "POST",
         mode: "no-cors",
-        body: JSON.stringify({
-          rating: rating,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          rating: String(rating),
           name: name,
           phone: phone,
           message: message,
-        }),
+        }).toString(),
       })
 
       setSubmitted(true)
-
       setName("")
       setPhone("")
       setMessage("")
     } catch (error) {
-      console.log(error)
+      console.error("Submission error:", error)
     }
   }
 
