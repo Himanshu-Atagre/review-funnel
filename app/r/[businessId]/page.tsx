@@ -27,15 +27,13 @@ export default function ReviewPage() {
     try {
       await fetch("https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           rating,
           name,
           phone,
           message,
         }),
+        mode: "no-cors",
       })
 
       setSubmitted(true)
