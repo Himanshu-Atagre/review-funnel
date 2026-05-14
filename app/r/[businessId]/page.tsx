@@ -42,7 +42,7 @@ const businesses: Record<
     googleReviewUrl: "https://share.google/XM35ldG8dQgfn9AIW",
   },
 
-  "angel's-n-devil's-restro-lounge-&-bar": {
+  "angel-n-devil-restro-lounge-bar": {
     name: "Angel's N Devil's Restro, Lounge & Bar",
     googleReviewUrl: "https://share.google/PqSkJNXgundAXRGoy",
   },
@@ -52,7 +52,7 @@ const businesses: Record<
     googleReviewUrl: "https://share.google/5TgcanpnClUHudw4v",
   },
 
-  "vishal-chadha's-skin-&-hair-clinic": {
+  "vishal-chadha-skin-and-hair-clinic": {
     name: "Dr. Vishal Chadha's Skin & Hair Clinic",
     googleReviewUrl: "https://share.google/8uGxyvcdTIL0FAwzq",
   },
@@ -84,7 +84,7 @@ export default function ReviewPage({
     setRating(value)
 
     // Positive Review Redirect
-    if (value >= 4) {
+    if (value >= 4 && business?.googleReviewUrl) {
       window.location.href = business.googleReviewUrl
     }
   }
