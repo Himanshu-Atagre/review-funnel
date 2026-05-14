@@ -60,13 +60,13 @@ const businesses: Record<
 
 /* ---------------- PAGE ---------------- */
 
-export default async function ReviewPage({
+export default function ReviewPage({
   params,
 }: {
-  params: Promise<{ businessId: string }>
+  params: { businessId: string }
 }) {
 
-  const { businessId } = await params
+  const businessId = params.businessId
   const business = businesses[businessId]
 
   const [rating, setRating] = useState(0)
