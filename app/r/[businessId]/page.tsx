@@ -27,37 +27,37 @@ const businesses: Record<
   "hotel-signature-inn": {
     name: "Hotel Signature Inn",
     // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/travel/hotels/s/itabVX4MYnt7CwQ78",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11fmzgsk29",
   },
   "hotel-prime": {
     name: "Hotel Prime",
     // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/travel/hotels/s/c5NWHKy8uRq55gTz6",
+    googleReviewUrl: "https://www.google.com/maps?cid=8377873089452375554",
   },
   "regenta-central-hotel": {
     name: "Regenta Central Hotel",
     // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/travel/hotels/s/dyNzq6kpbZMNj97E7",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11fj9hspmz",
   },
   "tadka-house-family-garden-restaurant": {
     name: "Tadka House Family Garden Restaurant",
-    googleReviewUrl: "https://share.google/5yBt2JS2JyzWuULjT",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11w55gcl_c",
   },
   "tipsy-turk": {
     name: "Tipsy Turk",
-    googleReviewUrl: "https://share.google/XM35ldG8dQgfn9AIW",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11txdy4x8z",
   },
   "angel-n-devil-restro-lounge-bar": {
     name: "Angel's N Devil's Restro, Lounge & Bar",
-    googleReviewUrl: "https://share.google/PqSkJNXgundAXRGoy",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11mw0n6dhl",
   },
   "revola-skin-and-hair-clinic": {
     name: "Revola Skin And Hair Clinic",
-    googleReviewUrl: "https://share.google/5TgcanpnClUHudw4v",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11l359n5y_",
   },
   "vishal-chadha-skin-and-hair-clinic": {
     name: "Dr. Vishal Chadha's Skin & Hair Clinic",
-    googleReviewUrl: "https://share.google/8uGxyvcdTIL0FAwzq",
+    googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJvUVAU6nB1DsRphwHbsPlZCk",
   },
 }
 
