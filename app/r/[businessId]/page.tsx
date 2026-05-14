@@ -45,7 +45,7 @@ const businesses: Record<
   },
   "tipsy-turk": {
     name: "Tipsy Turk",
-    googleReviewUrl: "https://search.google.com/local/writereview?placeid=/g/11txdy4x8z",
+    googleReviewUrl: "https://www.google.com/search?newwindow=1&sca_esv=a059850cea61b84d&rlz=1C1CHBF_enIN1038IN1038&sxsrf=ANbL-n4AKm1xKU7unxT2xFP5zyGvqslQUg:1778750082596&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOc7ZsEauOZYubR3ueCro9U8eFJ2wmBbtte9lMZ6VZ-3CKbDJ8LbdkVJRjYFTk7w-2GV65EuJ0-6sMfwah9eQXyJOU-Lc&q=Tipsy+Turk+Reviews&sa=X&ved=2ahUKEwjF0MS2uLiUAxXk7TgGHdm8L8oQ0bkNegQIRhAH#lrd=0x3bd4c141e643b58b:0xf5f4fdca8a4454b4,3,,,,",
   },
   "angel-n-devil-restro-lounge-bar": {
     name: "Angel's N Devil's Restro, Lounge & Bar",
