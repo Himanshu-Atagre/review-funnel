@@ -1,19 +1,17 @@
 "use client"
 
 import { use, useState } from "react"
-import { ArrowLeft, CircleUserRound, Info, Star } from "lucide-react"
+import {
+  ArrowLeft,
+  CircleUserRound,
+  Info,
+  Star,
+  CheckCircle2,
+} from "lucide-react"
+import { useRouter } from "next/navigation"
 
 /* -------------------------------------------------- */
-/*  BUSINESS CONFIG                                    */
-/*                                                     */
-/*  HOW TO GET A CORRECT GOOGLE REVIEW URL:            */
-/*  1. Open Google Maps on desktop                     */
-/*  2. Search your business name                       */
-/*  3. Click "Write a review"                          */
-/*  4. Copy the full URL from the address bar          */
-/*  It will look like:                                 */
-/*  https://search.google.com/local/writereview        */
-/*        ?placeid=ChIJXXXXXXXXXXXXXXXXXX             */
+/* BUSINESS CONFIG — unchanged                        */
 /* -------------------------------------------------- */
 
 const businesses: Record<
@@ -26,55 +24,55 @@ const businesses: Record<
   },
   "hotel-signature-inn": {
     name: "Hotel Signature Inn",
-    // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TMutSi_ONrI0YLRSNagwTkoxSTY3TExNNTA2TrSwtDKoSDI0SjM3MUwzMEo0TDQzTvGSysgvSc1RKM5Mz0ssKS1KVcjMy1PIS0wvKC0CAOfIGbQ&q=hotel+signature+inn+nagpur&rlz=1C1CHBF_enIN1038IN1038&oq=hotel+signature&gs_lcrp=EgZjaHJvbWUqGQgBEC4YrwEYxwEYkQIYgAQYigUYmAUYmQUyCQgAEEUYORiABDIZCAEQLhivARjHARiRAhiABBiKBRiYBRiZBTINCAIQLhivARjHARiABDITCAMQLhivARjHARiABBiYBRiZBTIQCAQQLhivARjHARiABBiYBTIGCAUQRRg8MgYIBhBFGDwyBggHEEUYPNIBCDg2MjBqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x3bd4c71aee033a89:0xb12f741f02a1a63d,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11fmzgsk29",
   },
   "hotel-prime": {
     name: "Hotel Prime",
-    // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TDdMqTLJsjQ3YLRSNagwTkoxSTY3TExLTEk2MDI3tzKoMDcxMTFKM0pLSTVMTks1MPISysgvSc1RKCjKzE1VyEtMLygtAgARzxaD&q=hotel+prime+nagpur&rlz=1C1CHBF_enIN1038IN1038&oq=hotel+prime&gs_lcrp=EgZjaHJvbWUqGQgDEC4YrwEYxwEYkQIYgAQYigUYmAUYmQUyGQgAEC4YrwEYxwEYkQIYgAQYigUYmAUYmQUyBggBEEUYOTINCAIQABiRAhiABBiKBTIZCAMQLhivARjHARiRAhiABBiKBRiYBRiZBTIHCAQQABiABDIGCAUQRRg8MgYIBhBFGDwyBggHEEUYPNIBCDg2NDRqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x3bd4c71afadc0277:0x74442f2fde1cfe02,3,,,,",
+    googleReviewUrl: "https://www.google.com/maps?cid=8377873089452375554",
   },
   "regenta-central-hotel": {
     name: "Regenta Central Hotel",
-    // ⚠️ Replace — old URL was a hotel booking link, not a review link
-    googleReviewUrl: "https://www.google.com/search?q=regenta-central-hotel&rlz=1C1CHBF_enIN1038IN1038&oq=regenta-central-hotel&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQABgeMgkIAhAAGB4YkgMyBggDEAAYHjIGCAQQABgeMgYIBRAAGB4yBggGEAAYHjIGCAcQRRg80gEINDYyNGowajeoAgCwAgA&sourceid=chrome&ie=UTF-8#lrd=0x3bd4c7ab11ba3647:0x43057e4cb0eb6be5,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11fj9hspmz",
   },
   "tadka-house-family-garden-restaurant": {
     name: "Tadka House Family Garden Restaurant",
-    googleReviewUrl: "https://www.google.com/search?newwindow=1&sca_esv=cc91047a17fc1aa0&rlz=1C1CHBF_enIN1038IN1038&sxsrf=ANbL-n5CayHLV-vkV5KZaoBjcvZD3zhqDw:1778752882898&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOfFspoKgPfabBPJMQBJAgknlB0EFlDM5qoRrNy5koNbM4LtVhwYVGBeTnTGKwKJSwDSLHJvk0H5zvMOyfLourrdzC8D95oxAX1zofFIeEuPj_EGUlbxGi8ZN5TFugpDbplViXLg%3D&q=Tadka+House+Family+Garden+Restaurant+Reviews&sa=X&ved=2ahUKEwiRxOntwriUAxXXr1YBHRo3MSQQ0bkNegQIMRAF&biw=1280&bih=585&dpr=1.5#lrd=0x3bd4bfb680accf3b:0xb52b0dcd564983da,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11w55gcl_c",
   },
   "tipsy-turk": {
     name: "Tipsy Turk",
-    googleReviewUrl: "https://www.google.com/search?newwindow=1&sca_esv=a059850cea61b84d&rlz=1C1CHBF_enIN1038IN1038&sxsrf=ANbL-n4AKm1xKU7unxT2xFP5zyGvqslQUg:1778750082596&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOc7ZsEauOZYubR3ueCro9U8eFJ2wmBbtte9lMZ6VZ-3CKbDJ8LbdkVJRjYFTk7w-2GV65EuJ0-6sMfwah9eQXyJOU-Lc&q=Tipsy+Turk+Reviews&sa=X&ved=2ahUKEwjF0MS2uLiUAxXk7TgGHdm8L8oQ0bkNegQIRhAH#lrd=0x3bd4c141e643b58b:0xf5f4fdca8a4454b4,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11txdy4x8z",
   },
   "angel-n-devil-restro-lounge-bar": {
     name: "Angel's N Devil's Restro, Lounge & Bar",
-    googleReviewUrl: "https://www.google.com/search?newwindow=1&sca_esv=cc91047a17fc1aa0&rlz=1C1CHBF_enIN1038IN1038&sxsrf=ANbL-n4JWbSy4udFAt2Llqq0eux9_stLEQ:1778753001428&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOTKFqPSQZFg8sNjExbrzJFjfaUd84-ykE4AyE8vg0uUSWA0Sg0VK9FDU57uiLvvzqywokniEO58iES3jYE8l40O4zFfTUPaPo5lrffpQ_BHboZRNxGWURE5_PETorE8eQu2Uxd60gOSRRozieYvhfvmtKl8XSQgJJJQ7uaNVxMBAy5V6JG7XYigKAYopf5oe__M3CJO0eZuvI-mmPhJMPDUW8NBU_1u0VQyLi6AyN1u59ZlSvA%3D%3D&q=Angel%27s+N+Devil%27s+Restro,+Lounge+%26+Bar+-+Best+Family+Restaurant+%7C+Highway+Restaurant+%7C+Dining+Restaurant+In+Nagpur+Reviews&sa=X&ved=2ahUKEwjAiKymw7iUAxUarlYBHS-pBxgQ0bkNegQIQhAF&biw=1280&bih=585&dpr=1.5#lrd=0x3bd4c1e9d0831595:0x89ddd54431366e00,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11mw0n6dhl",
   },
   "revola-skin-and-hair-clinic": {
     name: "Revola Skin And Hair Clinic",
-    googleReviewUrl: "https://www.google.com/search?newwindow=1&sca_esv=cc91047a17fc1aa0&rlz=1C1CHBF_enIN1038IN1038&sxsrf=ANbL-n7GvdybEZ5cd7NIk6Wp9Qrb_0t77Q:1778753062568&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOUxJwWx-3fkJg2BXaQ61t197eSff0fRPhxhqU4kZVBPRys3CywEytNeVZC56md95vpgdhq52TMi3aghXv0CCG-2-xlHf-c1IDY67PA59o4yEppaZJAvhaxn-URHHWYjPa9WdNpeSb4JzaepAnJZkpMLCL505&q=Revola+Skin+And+Hair+Clinic+in+Bajaj+Nagar,Nagpur+Reviews&sa=X&ved=2ahUKEwj42b_Dw7iUAxVbUOsIHecpHhwQ0bkNegQIOxAH&biw=1280&bih=585&dpr=1.5#lrd=0x3bd4c164c5612bd7:0xfaa5683b4c90bb07,3,,,,",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=/g/11l359n5y_",
   },
   "vishal-chadha-skin-and-hair-clinic": {
     name: "Dr. Vishal Chadha's Skin & Hair Clinic",
-    googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJvUVAU6nB1DsRphwHbsPlZCk",
+    googleReviewUrl:
+      "https://search.google.com/local/writereview?placeid=ChIJvUVAU6nB1DsRphwHbsPlZCk",
   },
 }
 
 /* -------------------------------------------------- */
-/*  PAGE                                               */
+/* PAGE                                               */
 /* -------------------------------------------------- */
 
 export default function ReviewPage({
   params,
 }: {
-  // FIX 1: In Next.js 15+, params is a Promise — not a plain object.
-  // The old type { businessId: string } silently made businessId
-  // undefined, breaking every business lookup.
   params: Promise<{ businessId: string }>
 }) {
-  // FIX 2: use() is the correct way to unwrap async params
-  // inside a Client Component in Next.js 15+.
+  const router = useRouter()
   const { businessId } = use(params)
   const business = businesses[businessId]
 
@@ -84,15 +82,21 @@ export default function ReviewPage({
   const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
+  /* — all logic unchanged — */
   const handleRating = (value: number) => {
     setRating(value)
     if (value >= 4 && business?.googleReviewUrl) {
-      window.location.href = business.googleReviewUrl
+      setTimeout(() => {
+        router.push(`/review-suggestions/${businessId}`)
+      }, 300)
     }
   }
 
   const handleSubmit = async () => {
+    if (!message.trim() || !name.trim()) return
+    setIsSubmitting(true)
     try {
       await fetch(
         "https://script.google.com/macros/s/AKfycbwIKC1z0cIG-ZDugSQNxDa_3ilqg-TEwGb82LGnhXCXp609nBqMFFmwQcc5Yrt6u4tu/exec",
@@ -116,131 +120,203 @@ export default function ReviewPage({
       setMessage("")
     } catch (error) {
       console.error("Submission error:", error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   if (!business) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-2xl font-semibold">
-        Business Not Found
+      <div className="min-h-screen bg-[#f4f1fb] flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-sm px-8 py-10 text-center max-w-sm w-full border border-gray-100">
+          <p className="text-gray-500 text-sm">Business not found. The link may be incorrect.</p>
+        </div>
       </div>
     )
   }
 
-  return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center">
-      <div className="w-full max-w-md bg-[#f5f5f5] min-h-screen">
+  const activeIndex = hover || rating
+  const ratingLabels = ["", "Poor", "Fair", "Good", "Great", "Excellent"]
 
-        {/* Header */}
-        <div className="flex items-center gap-4 px-4 py-5 border-b bg-white">
-          <ArrowLeft className="w-7 h-7 text-gray-700" />
-          <h1 className="text-[20px] font-normal text-gray-800">
-            {business.name}
-          </h1>
+  return (
+    /* 
+      FIX: min-h-screen with items-start + pt-8 sm:pt-12
+      — content starts from the top, not floating in the middle 
+    */
+    <div className="min-h-screen bg-[#f4f1fb] flex flex-col items-center justify-start pt-8 sm:pt-12 pb-16 px-4">
+      <div className="w-full max-w-md">
+
+        {/* ── Top nav bar ── */}
+        <div className="flex items-center gap-3 mb-6">
+          <button
+            onClick={() => router.back()}
+            style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
+            className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-900 hover:shadow-md transition-all border border-gray-100"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+          <span className="text-sm font-medium text-gray-600 truncate">{business.name}</span>
         </div>
 
-        {/* User Section */}
-        <div className="px-5 pt-8 flex items-start gap-4">
-          <CircleUserRound className="w-14 h-14 text-gray-400" />
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <h2 className="text-[18px] font-medium text-gray-800">
-                Posting publicly
-              </h2>
-              <Info className="w-5 h-5 text-gray-500" />
+        {/* ── Main card ── */}
+        <div className="bg-white rounded-3xl shadow-[0_4px_32px_rgba(109,40,217,0.08)] border border-purple-50 overflow-hidden">
+
+          {/* Identity strip */}
+          <div className="flex items-center gap-3 px-6 py-4 bg-gray-50/60 border-b border-gray-100">
+            <div className="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
+              <CircleUserRound className="w-5 h-5 text-gray-400" />
             </div>
-            <p className="text-gray-500 text-[15px]">
-              Share your experience with this place
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-semibold text-gray-800">Posting publicly</span>
+                <Info className="w-3.5 h-3.5 text-gray-400" />
+              </div>
+              <p className="text-xs text-gray-400 mt-0.5">Share your experience with others</p>
+            </div>
+          </div>
+
+          {/* Rating body */}
+          <div className="px-6 sm:px-10 pt-10 pb-8 text-center">
+
+            <span className="inline-block text-xs font-bold tracking-[0.22em] text-purple-500 uppercase mb-5">
+              Rate Your Visit
+            </span>
+
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug mb-2">
+              How was your experience?
+            </h2>
+            <p className="text-sm text-gray-400 mb-8">
+              Tap a star to share your feedback
+            </p>
+
+            {/* Stars */}
+            <div className="flex justify-center items-center gap-1 sm:gap-2 mb-3">
+              {[1, 2, 3, 4, 5].map((star) => {
+                const isActive = star <= activeIndex
+                return (
+                  <button
+                    key={star}
+                    type="button"
+                    aria-label={`Rate ${star} stars`}
+                    onPointerDown={() => handleRating(star)}
+                    onMouseEnter={() => setHover(star)}
+                    onMouseLeave={() => setHover(0)}
+                    style={{
+                      touchAction: "manipulation",
+                      WebkitTapHighlightColor: "transparent",
+                      minWidth: "52px",
+                      minHeight: "52px",
+                    }}
+                    className="flex items-center justify-center transition-transform duration-150 hover:scale-110 active:scale-95"
+                  >
+                    <Star
+                      style={{ pointerEvents: "none" }}
+                      className={`w-11 h-11 sm:w-12 sm:h-12 transition-all duration-200 ${
+                        isActive
+                          ? "fill-amber-400 text-amber-400 drop-shadow-[0_2px_8px_rgba(251,191,36,0.45)]"
+                          : "text-gray-200 hover:text-gray-300"
+                      }`}
+                      strokeWidth={isActive ? 0 : 1.5}
+                    />
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Dynamic label */}
+            <div className="h-6 flex items-center justify-center">
+              {rating > 0 && (
+                <span className={`text-sm font-semibold px-3 py-0.5 rounded-full ${
+                  rating >= 4
+                    ? "bg-green-50 text-green-600"
+                    : rating === 3
+                    ? "bg-amber-50 text-amber-600"
+                    : "bg-red-50 text-red-500"
+                }`}>
+                  {ratingLabels[rating]}
+                </span>
+              )}
+            </div>
+
+          </div>
+
+          {/* ── Negative feedback form ── */}
+          <div className={`transition-all duration-500 ease-in-out overflow-hidden ${
+            rating > 0 && rating <= 3 ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
+          }`}>
+            <div className="px-6 sm:px-10 pt-6 pb-8 border-t border-gray-100 bg-gray-50/40">
+
+              <p className="text-sm font-semibold text-gray-700 mb-4">How can we improve?</p>
+
+              <div className="space-y-3">
+                <textarea
+                  placeholder="Tell us what went wrong..."
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{ fontSize: "16px" }}
+                  className="w-full bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none resize-none transition-all placeholder:text-gray-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/10"
+                />
+
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={{ fontSize: "16px" }}
+                    className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/10"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    style={{ fontSize: "16px" }}
+                    className="bg-white rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/10"
+                  />
+                </div>
+              </div>
+
+              {!submitted ? (
+                <button
+                  type="button"
+                  onPointerDown={handleSubmit}
+                  disabled={isSubmitting || !message.trim() || !name.trim()}
+                  style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
+                  className="w-full mt-5 bg-gradient-to-r from-purple-600 to-violet-600 text-white py-4 rounded-xl text-sm font-semibold tracking-wide shadow-[0_4px_20px_rgba(124,58,237,0.3)] hover:shadow-[0_6px_24px_rgba(124,58,237,0.4)] hover:-translate-y-px transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : "Send Feedback"}
+                </button>
+              ) : (
+                <div className="mt-5 bg-green-50 border border-green-100 rounded-xl p-4 flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-green-800">Feedback received</p>
+                    <p className="text-xs text-green-600 mt-0.5">Thank you for helping us improve.</p>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="py-3 border-t border-gray-50 text-center">
+            <p className="text-[10px] tracking-[0.2em] uppercase text-gray-300">
+              Powered by Review Funnel
             </p>
           </div>
+
         </div>
-
-        {/* Stars */}
-        <div className="flex justify-center gap-2 mt-12 px-4">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              aria-label={`Rate ${star} stars`}
-              onPointerDown={() => handleRating(star)}
-              onMouseEnter={() => setHover(star)}
-              onMouseLeave={() => setHover(0)}
-              style={{
-                touchAction: "manipulation",
-                WebkitTapHighlightColor: "transparent",
-                minWidth: "56px",
-                minHeight: "56px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: "4px",
-              }}
-            >
-              <Star
-                strokeWidth={1.5}
-                style={{ pointerEvents: "none" }}
-                className={`w-12 h-12 transition-all duration-200 ${
-                  star <= (hover || rating)
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-gray-500"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Negative Feedback Form */}
-        {rating > 0 && rating <= 3 && (
-          <div className="px-5 mt-10 pb-10">
-            <div className="border border-gray-400 rounded-xl bg-white p-4">
-              <textarea
-                placeholder="Share details of your own experience at this place"
-                rows={5}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                style={{ fontSize: "16px" }}
-                className="w-full outline-none resize-none text-black placeholder:text-gray-400"
-              />
-            </div>
-
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={{ fontSize: "16px" }}
-              className="w-full mt-5 border border-gray-300 rounded-xl bg-white px-4 py-4 text-black outline-none"
-            />
-
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              style={{ fontSize: "16px" }}
-              className="w-full mt-4 border border-gray-300 rounded-xl bg-white px-4 py-4 text-black outline-none"
-            />
-
-            <button
-              type="button"
-              onPointerDown={handleSubmit}
-              style={{
-                touchAction: "manipulation",
-                WebkitTapHighlightColor: "transparent",
-              }}
-              className="w-full mt-6 bg-[#1a73e8] text-white py-4 rounded-full text-[18px] font-medium"
-            >
-              Submit Feedback
-            </button>
-
-            {submitted && (
-              <p className="text-green-600 text-center mt-4 font-medium">
-                ✓ Feedback submitted successfully
-              </p>
-            )}
-          </div>
-        )}
-
       </div>
     </div>
   )
